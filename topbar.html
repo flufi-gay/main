@@ -1,0 +1,90 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Lexend');
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        overflow-y: auto;
+        background-color: #11001b
+    }
+
+    #topbar {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        height: 50px;
+        margin: 15px 15px 0px 15px;
+
+        display: flex;
+        justify-content: space-between;
+
+        background-color: rgb(22, 8, 53);
+        border: rgb(55, 17, 109)1px solid;
+        border-radius: 15px;
+    }
+    .icon {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        overflow: hidden;
+        display: inline-block;
+    }
+    .icon :hover {
+        transform: rotate(5deg);
+    }
+    #pfp {
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.15s ease;
+        transform-origin: center;
+    }
+    #pages {
+        padding: 0px 7.5px;
+    }
+    .page {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0px 7.5px;
+
+        display: inline-flex;
+    }
+    * {
+        font-family: "Lexend";
+        color: rgb(188, 159, 226);
+    }
+    a {
+        text-decoration: none;
+        color: rgb(188, 159, 226);
+    }
+</style>
+<div id="topbar">
+    <div class="icon">
+        <a id="pfplnk" href="https://flufi.gay">
+            <img id="pfp" src="https://avatars.rotur.dev/flufi">
+        </a>
+    </div>
+    <ul id="pages">
+        <li class="page">
+            <a href="https://gallery.flufi.gay">
+                Gallery
+            </a>
+        </li>
+        <li class="page">
+            <a href="https://github.com/ThePandaDever/Flufi-OS">
+                Flufi OS
+            </a>
+        </li>
+        <li class="page">
+            <a href="https://github.com/ThePandaDever">
+                Github
+            </a>
+        </li>
+    </ul>
+</div>
