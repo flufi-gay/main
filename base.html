@@ -1,0 +1,174 @@
+<canvas id="canvas"></canvas>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Lexend');
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        overflow-y: auto;
+        background-color: #11001b
+    }
+
+    #topbar {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        height: 50px;
+        margin: 15px 15px 0px 15px;
+
+        display: flex;
+        justify-content: space-between;
+
+        background-color: rgb(22, 8, 53);
+        border: rgb(55, 17, 109)1px solid;
+        border-radius: 15px;
+    }
+    .icon {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        overflow: hidden;
+        display: inline-block;
+    }
+    .icon :hover {
+        transform: rotate(5deg);
+    }
+    #pfp {
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.15s ease;
+        transform-origin: center;
+    }
+    #pages {
+        padding: 0px 7.5px;
+    }
+    .page {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0px 7.5px;
+
+        display: inline-flex;
+    }
+    * {
+        font-family: "Lexend";
+        color: rgb(188, 159, 226);
+    }
+    a {
+        text-decoration: none;
+        color: rgb(188, 159, 226);
+    }
+</style>
+<div id="topbar">
+    <div class="icon">
+        <a id="pfplnk" href="https://flufi.gay">
+            <img id="pfp" src="https://avatars.rotur.dev/flufi">
+        </a>
+    </div>
+    <ul id="pages">
+        <li class="page">
+            <a href="https://gallery.flufi.gay">
+                Gallery
+            </a>
+        </li>
+        <li class="page">
+            <a href="https://github.com/ThePandaDever/Flufi-OS">
+                Flufi OS
+            </a>
+        </li>
+        <li class="page">
+            <a href="https://github.com/ThePandaDever">
+                Github
+            </a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    let ctx, canvas;
+
+    const img = new Image();
+    img.src = 'https://i.etsystatic.com/21680765/r/il/b11a1c/3220593545/il_570xN.3220593545_is29.jpg';
+    
+    function resizeCanvas() {
+        if (canvas == null)
+            canvas = document.getElementById("canvas");
+        if (ctx == null && canvas != null)
+            ctx = canvas.getContext("2d");
+        if (ctx == null)
+            return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        redraw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawFunny(x,y,dir) {
+        const size = 40;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(dir * (Math.PI / 180));
+        ctx.drawImage(img, size / -2, size / -2, size, size);
+        ctx.restore();
+    }
+
+    const funnies = [];
+
+    function makeFunny() {
+        funnies.push([
+            Math.random(),
+            Math.random(),
+            0,
+            (Math.random() - .5) * 2,
+            (Math.random() - .5) * 2,
+        ]);
+    }
+
+    function redraw() {
+        if (canvas == null)
+            canvas = document.getElementById("canvas");
+        if (ctx == null && canvas != null) {
+            resizeCanvas()
+            ctx = canvas.getContext("2d");
+        }
+        if (ctx == null)
+            return;
+        ctx.fillStyle = '#200033';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (img.complete) {
+            for (let i = 0; i < funnies.length; i++) {
+                const funny = funnies[i];
+                drawFunny(funny[0] * canvas.width, funny[1] * canvas.height, funny[2]);
+                funny[0] += funny[3] * .001;
+                funny[1] += funny[4] * .001;
+                if (funny[0] < 0)
+                    funny[3] = -funny[3];
+                if (funny[1] < 0)
+                    funny[4] = -funny[4];
+                if (funny[0] > 1)
+                    funny[3] = -funny[3];
+                if (funny[1] > 1)
+                    funny[4] = -funny[4];
+                if (funny[4] < .01 && funny[1] > .9)
+                    funny[4] += -.001;
+                if (funny[1] > 1.01) {
+                    funny[4] = -4;
+                    funny[1] -= .01;
+                }
+                funny[4] += .01;
+            }
+        }
+    }
+
+    for (let i = 0; i < 100; i++) {
+        makeFunny();
+    }
+    setInterval(redraw, 5);
+</script>
