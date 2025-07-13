@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Flufi</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="https://avatars.rotur.dev/flufi?radius=50px" type="image/png">
@@ -13,101 +14,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <canvas id="canvas"></canvas>
     <script>
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext("2d");
-
-        const img = new Image();
-        img.src = 'https://i.etsystatic.com/21680765/r/il/b11a1c/3220593545/il_570xN.3220593545_is29.jpg';
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            redraw();
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        function drawFunny(x,y,dir) {
-            const size = 40;
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(dir * (Math.PI / 180));
-            ctx.drawImage(img, size / -2, size / -2, size, size);
-            ctx.restore();
-        }
-
-        const funnies = [];
-
-        function makeFunny() {
-            funnies.push([
-                Math.random(),
-                Math.random(),
-                0,
-                (Math.random() - .5) * 2,
-                (Math.random() - .5) * 2,
-            ]);
-        }
-
-        function redraw() {
-            ctx.fillStyle = '#200033';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            if (img.complete) {
-                for (let i = 0; i < funnies.length; i++) {
-                    const funny = funnies[i];
-                    drawFunny(funny[0] * canvas.width, funny[1] * canvas.height, funny[2]);
-                    funny[0] += funny[3] * .001;
-                    funny[1] += funny[4] * .001;
-                    if (funny[0] < 0)
-                        funny[3] = -funny[3];
-                    if (funny[1] < 0)
-                        funny[4] = -funny[4];
-                    if (funny[0] > 1)
-                        funny[3] = -funny[3];
-                    if (funny[1] > 1)
-                        funny[4] = -funny[4];
-                    if (funny[4] < .01 && funny[1] > .9)
-                        funny[4] += -.001;
-                    if (funny[1] > 1.01) {
-                        funny[4] = -4;
-                        funny[1] -= .01;
-                    }
-                    funny[4] += .01;
-                }
-            }
-        }
-
-        for (let i = 0; i < 100; i++) {
-            makeFunny();
-        }
-        setInterval(redraw, 5);
+        const body = document.body;
+        fetch('https://flufi.gay/base.html')
+            .then(response => response.text())
+            .then(data => {
+                body.innerHTML = data + body.innerHTML;
+            });
+        fetch('https://flufi.gay/canvas.js')
+            .then(response => response.text())
+            .then(data => {
+                let script = document.createElement("script");
+                script.textContent = data;
+                body.appendChild(script);
+            });
     </script>
-    <div id="topbar">
-        <div class="icon">
-            <a id="pfplnk" href="https://flufi.gay">
-                <img id="pfp" src="https://avatars.rotur.dev/flufi">
-            </a>
-        </div>
-        <ul id="pages">
-            <li class="page">
-                <a href="https://gallery.flufi.gay">
-                    Gallery
-                </a>
-            </li>
-            <li class="page">
-                <a href="https://github.com/ThePandaDever/Flufi-OS">
-                    Flufi OS
-                </a>
-            </li>
-            <li class="page">
-                <a href="https://github.com/ThePandaDever">
-                    Github
-                </a>
-            </li>
-        </ul>
-    </div>
     <div id="content">
         <div class="block pb">
             <h1>Haii! I'm Flufi :3</h1>
