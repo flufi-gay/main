@@ -1,4 +1,3 @@
-
 let ctx, canvas;
 
 const img = new Image();
@@ -54,8 +53,8 @@ function redraw() {
         for (let i = 0; i < funnies.length; i++) {
             const funny = funnies[i];
             drawFunny(funny[0] * canvas.width, funny[1] * canvas.height, funny[2]);
-            funny[0] += funny[3] * .001;
-            funny[1] += funny[4] * .001;
+            funny[0] += funny[3] * .0035;
+            funny[1] += funny[4] * .0035;
             if (funny[0] < 0)
                 funny[3] = -funny[3];
             if (funny[1] < 0)
@@ -78,4 +77,4 @@ function redraw() {
 for (let i = 0; i < 100; i++) {
     makeFunny();
 }
-setInterval(redraw, 5);
+setInterval(redraw, 10);
